@@ -8,7 +8,10 @@ os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
- 
+output_file = '~/temp.log'
+
+outfile = open(output_file, 'w')
+
 def read_temp_raw():
     f = open(device_file, 'r')
     lines = f.readlines()
@@ -29,5 +32,6 @@ def read_temp():
         return timestamp, temp_c
 	
 while True:
-	print(read_temp())	
+	#print(read_temp())	
+	outfile.write(read_temp())
 	time.sleep(1)
