@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import glob
 import time
@@ -8,9 +10,9 @@ os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
-output_file = '~/temp.log'
+#output_file = 'temp.log'
 
-outfile = open(output_file, 'w')
+#outfile = open(output_file, 'a')
 
 def read_temp_raw():
     f = open(device_file, 'r')
@@ -28,10 +30,10 @@ def read_temp():
         temp_string = lines[1][equals_pos+2:]
         temp_c = float(temp_string) / 1000.0
         temp_f = temp_c * 9.0 / 5.0 + 32.0
-	timestamp = time.strftime('%d/%m/%Y %H:%M:%S %Z')
+        timestamp = time.strftime('%d/%m/%Y %H:%M:%S %Z')
         return timestamp, temp_c
-	
+        
 while True:
-	#print(read_temp())	
-	outfile.write(read_temp())
-	time.sleep(1)
+        print(read_temp())      
+        #outfile.write(str(read_temp())+'\n')
+        time.sleep(1)
